@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <math.h>
+
+
+double f(double x){
+double g=0.033*x*x*x-5*x*x+210*x-2700;
+double gprime=0.099*x*x-10*x+210;
+double xn=x-g/gprime;
+return xn;
+
+}
+
+
+
+
+int main(){
+double x0=1,x1=80,e=0.000001;
+int counter=1;
+while(fabs(x1-x0)/fabs(x0)>e){
+	printf("%d\t%lf\n",counter,log(fabs(x1-x0)/fabs(x0)));
+x0=x1;
+x1=f(x0);
+counter++;
+	}
+printf("xの解 = %lf\n",x0);
+return 0;
+}
