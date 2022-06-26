@@ -5,7 +5,7 @@
    
  int main(void){
       double a[N+1][N+1], x[N+1], b[N+1];
-    double dx, absx, sum, new;
+    double dx, absx, sum, xnew;
       int i,j;
    
      a[1][1]=5.0;  a[1][2]=-3.0;  a[1][3]=4.0;  // 係数行列
@@ -33,10 +33,10 @@
    }
          }
    
-         new=1.0/a[i][i]*(b[i]-sum);   // 反復計算後の近似解
-         dx+=fabs(new-x[i]);           // 近似解の変化量を加算
-       absx+=fabs(new);              // 近似解の総和計算
-         x[i]=new;                     // 新しい近似解を代入
+         xnew=1.0/a[i][i]*(b[i]-sum);   // 反復計算後の近似解
+         dx+=fabs(xnew-x[i]);           // 近似解の変化量を加算
+       absx+=fabs(xnew);              // 近似解の総和計算
+         x[i]=xnew;                     // 新しい近似解を代入
        }
       
      }while(dx/absx > EPS);            // 計算終了条件
