@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <math.h>
+
+#define n 3                             //未知数の個数
+#define max                  //繰り返し最大回数
+#define eps 1.0e-6              //最小誤差許容範囲
+
+int main()
+{
+        int i,j,k;
+        double err;
+/*配列a,bには係数の値等を。配列xoldには適当に決めた解の値を入れておく*/
+        double a[n][n]={{1.0,-3.0,4.0},{3.0,-4.0,1.0},{4.0,-1.0,3.0}},
+                b[n]={5857.0,5170.0,8049.0},xold[n]={1.0,1.0,1.0},xnew[n];
+
+        for(k=0;k<max;k++) {
+                err=0.0;                        //誤差のリセット
+                for(i=0;i<n;i++) {
+                        xnew[i]=b[i];
+                        for(j=0;j<n;j++) {
+                                if(j!=i) {
+                                        xnew[i]-=a[i][j]*xold[j];
+                                }
+                        }
+                        xnew[i]=xnew[i]/a[i][i];
+                }
+
+/*各解の誤差を足し、古い解は捨て配列xoldに新しい解を入れる*/
+                for(i=0;i<n;i++) {
+                        err+=fabs(xold[i]-xnew[i]);
+                        xold[i]=xnew[i];
+                       {printf("%8.4f\n",xnew[i]);
+                       }
+                }
+
+/*足しあわされた誤差が許容範囲内だったら
+計算終了とし解が求まったとする*/
+                if(err<eps) break;
+        }
+
+/*求まった解を出力する*/
+        for(i=0;i<n;i++) {
+                printf("%8.4f\n",xnew[i]);
+        }
+
+/*繰り返し回数が最大回数の値だったら
+正確な解が求まっていない可能性大なので注意*/
+        printf("繰り返し回数は %d\n",k+1);
+
+        return 0;
+}
